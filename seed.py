@@ -3,13 +3,13 @@ import datetime
 import sqlalchemy
 import random
 
+from config import engine
+
 from sqlalchemy import create_engine, String, Float, DateTime, ForeignKey
-from sqlalchemy.orm import relationship, sessionmaker, Mapped, mapped_column
+from sqlalchemy.orm import sessionmaker, Mapped, mapped_column
 from sqlalchemy.orm import declarative_base
 
-engine = create_engine('postgresql://postgres:monica@localhost:5432/postgres')
 DBSession = sessionmaker(bind=engine)
-
 Base = declarative_base()
 
 
@@ -122,34 +122,5 @@ def init_db():
         session.commit()
 
 
-from my_select import select_1, select_2, select_3, select_4, select_5, select_6, select_7, select_8, select_9, select_10
-
-
-def show_db():
-    with DBSession() as session:
-        result_1 = select_1(session, Student, Score)
-        result_2 = select_2(session, Student, Score, Lesson)
-        result_3 = select_3(session, Student, Score, Lesson, Groupe)
-        result_4 = select_4(session, Score)
-        result_5 = select_5(session, Lesson, Teacher)
-        result_6 = select_6(session, Student, Groupe)
-        result_7 = select_7(session, Student, Score, Lesson, Groupe)
-        result_8 = select_8(session, Score, Lesson, Teacher)
-        result_9 = select_9(session, Student, Score, Lesson)
-        result_10 = select_10(session, Student, Score, Lesson, Teacher)
-    
-    print(f"SELECT 1\n{result_1}\n")
-    print(f"SELECT 2\n{result_2}\n")
-    print(f"SELECT 3\n{result_3}\n")
-    print(f"SELECT 4\n{result_4}\n")
-    print(f"SELECT 5\n{result_5}\n")
-    print(f"SELECT 6\n{result_6}\n")
-    print(f"SELECT 7\n{result_7}\n")
-    print(f"SELECT 8\n{result_8}\n")
-    print(f"SELECT 9\n{result_9}\n")
-    print(f"SELECT 10\n{result_10}\n")
-
-
 if __name__ == "__main__":
-    # init_db()
-    show_db()
+    init_db()
