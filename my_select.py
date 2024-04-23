@@ -1,8 +1,16 @@
 from config import engine
 from seed import Student, Score, Lesson, Groupe, Teacher
+
 from sqlalchemy import func, desc, and_
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+engine = create_engine(f'postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}')
 
 DBSession = sessionmaker(bind=engine)
 
@@ -62,6 +70,7 @@ def select_7(session):
         .select_from(Groupe) \
         .join(Student) \
         .join(Score) \
+        .join(Lesson) \
         .where(and_(Lesson.id == 8), (Groupe.id == 1)) \
         .all()
 

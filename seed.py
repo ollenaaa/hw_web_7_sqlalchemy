@@ -3,11 +3,16 @@ import datetime
 import sqlalchemy
 import random
 
-from config import engine
-
 from sqlalchemy import create_engine, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import sessionmaker, Mapped, mapped_column
 from sqlalchemy.orm import declarative_base
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+engine = create_engine(f'postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}')
 
 DBSession = sessionmaker(bind=engine)
 Base = declarative_base()
